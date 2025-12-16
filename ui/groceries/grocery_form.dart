@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 import '../../models/grocery.dart';
 
 class NewItem extends StatefulWidget {
@@ -13,7 +11,6 @@ class NewItem extends StatefulWidget {
 }
 
 class _NewItemState extends State<NewItem> {
-
   // Default settings
   static const defautName = "New grocery";
   static const defaultQuantity = 1;
@@ -23,7 +20,7 @@ class _NewItemState extends State<NewItem> {
   final _nameController = TextEditingController();
   final _quantityController = TextEditingController();
   GroceryCategory _selectedCategory = defaultCategory;
-   final List<Grocery> groceries = [];
+  
   @override
   void initState() {
     super.initState();
@@ -44,23 +41,23 @@ class _NewItemState extends State<NewItem> {
 
   void onReset() {
     // Will be implemented later - Reset all fields to the initial values
-  setState(() {
-    
-  });
+    setState(() {
+       _nameController.text = defautName;
+       _quantityController.text = defaultQuantity.toString();
+       _selectedCategory = defaultCategory ;
+    });
   }
 
   void onAdd() {
     // Will be implemented later - Create and return the new grocery
     final newGrocery = Grocery(
-    name: _nameController.text,
-    quantity: int.tryParse(_quantityController.text) ?? 1,
-    category: _selectedCategory, id: '',
-  );
-
-  Navigator.pop(context, newGrocery);
-  setState(() {
-  groceries.add(newGrocery);
-});
+      name: _nameController.text,
+      quantity: int.tryParse(_quantityController.text) ?? 1,
+      category: _selectedCategory,
+      id: '',
+    );
+    Navigator.pop(context, newGrocery);
+   
   }
 
   @override
@@ -90,22 +87,21 @@ class _NewItemState extends State<NewItem> {
                 Expanded(
                   child: DropdownButtonFormField<GroceryCategory>(
                     initialValue: _selectedCategory,
-                    items: GroceryCategory.values
-                    .map((category) {
-                      return DropdownMenuItem<GroceryCategory>(          
+                    items: GroceryCategory.values.map((category) {
+                      return DropdownMenuItem<GroceryCategory>(
                         value: category,
-                         child: Row(
+                        child: Row(
                           children: [
-                          Container(
-                            width: 15,
-                            height: 15,
-                            color: category.color,
-                          ),
-                          SizedBox(width: 10,),
-                          Text(category.name.toUpperCase())  ,
-                      
+                            Container(
+                              width: 15,
+                              height: 15,
+                              color: category.color,
+                            ),
+                            SizedBox(width: 10),
+                            Text(category.name.toUpperCase()),
                           ],
-                       ));    
+                        ),
+                      );
                     }).toList(),
                     onChanged: (value) {
                       if (value != null) {
@@ -123,10 +119,7 @@ class _NewItemState extends State<NewItem> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(onPressed: onReset, child: const Text('Reset')),
-                ElevatedButton(
-                  onPressed: onAdd,
-                  child: const Text('Add Item'),
-                ),
+                ElevatedButton(onPressed: onAdd, child: const Text('Add Item')),
               ],
             ),
           ],

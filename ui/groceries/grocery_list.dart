@@ -12,7 +12,7 @@ class GroceryList extends StatefulWidget {
 }
 
 class _GroceryListState extends State<GroceryList> {
-  final List<Grocery> groceries = [];
+  final List<Grocery> groceries = [...dummyGroceryItems];
   void onCreate() async {
     //Navigate to the form screen using the Navigator push
     final Grocery? newItem = await Navigator.push(
@@ -26,9 +26,8 @@ class _GroceryListState extends State<GroceryList> {
       groceries.add(newItem);
     }
     );
+    
   }
-  
-
   
 
   }
@@ -36,15 +35,15 @@ class _GroceryListState extends State<GroceryList> {
   @override
   Widget build(BuildContext context) {
      
-    final allGrocery = [...dummyGroceryItems,...groceries];
+   
     Widget content = const Center(child: Text('No items added yet.'));
 
-    if (allGrocery.isNotEmpty) {
+    if (groceries.isNotEmpty) {
       //  1 - Display groceries with an Item builder and  LIst Tile
       content = ListView.builder(
-        itemCount: allGrocery.length,
+        itemCount: groceries.length,
         itemBuilder: (context, index) =>
-            GroceryTile(grocery: allGrocery[index]),
+            GroceryTile(grocery: groceries[index]),
       );
     }
 
